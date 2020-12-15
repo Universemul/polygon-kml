@@ -10,7 +10,13 @@ pub struct Context {
 }
 
 fn print_usage(){
-    println!("HELP METHOD");
+    println!("Usage: ./parse_polygon path [OPTIONS]\n\n \
+    \t --delimiter, -d: Specify the csv delimiter. Default is ';' \n\
+    \t --inner_delimiter -i: Specify the delimiter between Polygon. Default is ','\n\
+    \t --output, -o: Specify the name of the kml file. Default is output.kml in the current directory\n\
+    \t -t: Specify if the csv file has headers\n\
+    \t --help, -h: Display this usage\n\
+    ");
     exit(0);
 }
 
