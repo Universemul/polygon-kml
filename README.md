@@ -9,7 +9,6 @@ Usage:
 
 Polygon name (can be empty) | Coordinates
 
-2. Parse the file foffowing the configuration
 3. Construct DataStructure to store all polygons
  
 A Polygon is defined like :

@@ -1,3 +1,4 @@
+use crate::context::Context;
 use crate::File;
 use csv::Reader;
 
@@ -11,16 +12,16 @@ pub struct CsvReader {
 
 // Refactor this
 pub trait ToPolygonCsv {
-    fn parse_polygon_csv(self, delimiter: u8, inner_delimiter: u8, has_headers: bool) -> CsvReader;
+    fn parse_polygon_csv(self, context: &Context) -> CsvReader;
 }
 
 impl ToPolygonCsv for std::fs::File {
-    fn parse_polygon_csv(self, delimiter: u8, inner_delimiter: u8, has_headers: bool) -> CsvReader {
+    fn parse_polygon_csv(self, context: &Context) -> CsvReader {
         let rdr = CsvReader{
-            delimiter: delimiter,
-            inner_delimiter: inner_delimiter,
-            has_headers: has_headers,
-            reader: csv::ReaderBuilder::new().has_headers(has_headers).delimiter(delimiter).from_reader(self)
+            delimiter: context.delimiter,
+            inner_delimiter: context.inner_delimiter,
+            has_headers: context.has_headers,
+            reader: csv::ReaderBuilder::new().has_headers(context.has_headers).delimiter(context.delimiter).from_reader(self)
         };
         rdr
     }
