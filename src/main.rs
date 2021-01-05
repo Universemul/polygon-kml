@@ -21,20 +21,21 @@ pub struct Row {
     coordinates: String,
 }
 
-// TODO @david : capture exception here 
 // GET the key in coordinates column. Everything before the first (
-fn find_key(line: String) -> String {
-    let first_parenthesis = line.find('(').unwrap();
-    line[0..first_parenthesis].to_string()
+fn find_key(line: String, index: usize) -> String {
+    match line.find('(') {
+        None => panic!("Unable to find the key before the first ( at line {}", index),
+        Some(position) => line[0..position].to_string()
+    }
 }
 
 fn main() {
     let context = get_args();
     // Error handling here
     let mut rdr = File::open(context.filepath.clone()).unwrap().parse_polygon_csv(&context);
-    for result in rdr.reader.deserialize::<Row>() {
+    for (pos, result) in rdr.reader.deserialize::<Row>().enumerate() {
         let row: Row = result.unwrap();
-        let key = find_key(row.coordinates.clone());
+        let key = find_key(row.coordinates.clone(), pos + 1);
         let coordinates = find_polygon(row.coordinates.as_str());
         println!("{:?}", coordinates);
         println!("{}", key);
